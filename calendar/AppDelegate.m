@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "CollectionViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.itemSize = CGSizeMake(100, 100);
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    CollectionViewController *vc = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout];
+    
+    [self.window setRootViewController:vc];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
