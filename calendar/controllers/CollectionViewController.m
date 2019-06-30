@@ -8,10 +8,15 @@
 
 #import "CollectionViewController.h"
 #import "CollectionViewCell.h"
+#import <EventKit/EventKit.h>
 
 static NSString * const reuseIdentifier = @"Cell";
 
 @interface CollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@property(assign, nonatomic) NSInteger dayIndex;
+
+@property(strong, nonatomic) EKEventStore *eventStore;
+@property(strong, nonatomic) NSMutableArray <NSArray *> *dataModel;
 @end
 
 
@@ -20,24 +25,48 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.dayIndex = 0;
+    self.dataModel = [[NSMutableArray alloc] init];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.eventStore = [[EKEventStore alloc] init];
+
+    [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
+        for (int i = 0; i < 7; i++) {
+            NSDate *startDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * i)];
+            NSDate *endDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * (i + 1))];
+            NSPredicate *pred = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
+            NSArray *events = [self.eventStore eventsMatchingPredicate:pred];
+            [self.dataModel addObject:events];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }];
+    
+    [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 0;
+    return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    if ([self.dataModel count] > self.dayIndex) {
+        return [self.dataModel[self.dayIndex] count];
+    } else {
+        return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    
+    cell.backgroundColor = [UIColor blackColor];
     
     // Configure the cell
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32012D3222C8AC68001CFA83 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32012D3122C8AC68001CFA83 /* EventKit.framework */; };
 		32330A2E22C7B0B000E411EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32330A2D22C7B0B000E411EF /* AppDelegate.m */; };
 		32330A3622C7B0B000E411EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3522C7B0B000E411EF /* Assets.xcassets */; };
 		32330A3922C7B0B000E411EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3722C7B0B000E411EF /* LaunchScreen.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		32012D3122C8AC68001CFA83 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		32330A2922C7B0B000E411EF /* calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32330A2C22C7B0B000E411EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		32330A2D22C7B0B000E411EF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -34,17 +36,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32012D3222C8AC68001CFA83 /* EventKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32012D3022C8AC68001CFA83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32012D3122C8AC68001CFA83 /* EventKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		32330A2022C7B0B000E411EF = {
 			isa = PBXGroup;
 			children = (
 				32330A2B22C7B0B000E411EF /* calendar */,
 				32330A2A22C7B0B000E411EF /* Products */,
+				32012D3022C8AC68001CFA83 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

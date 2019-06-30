@@ -22,11 +22,13 @@
     
     UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = CGSizeMake(100, 100);
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     CollectionViewController *vc = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout];
     
-    [self.window setRootViewController:vc];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    [self.window setRootViewController:nc];
     [self.window makeKeyAndVisible];
     
     return YES;
