@@ -7,24 +7,18 @@
 //
 
 #import "AppDelegate.h"
-#import "CollectionViewController.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    UICollectionViewFlowLayout* flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(100, 100);
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
-    CollectionViewController *vc = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout];
+
+    MainViewController *vc = [[MainViewController alloc] init];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
 
     [self.window setRootViewController:nc];

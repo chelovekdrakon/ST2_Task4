@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CollectionViewController : UICollectionViewController
+@interface HeaderViewController : UICollectionViewController
+
+- (void)updateDataModel:(NSArray *)nextDataModel;
 
 @end
