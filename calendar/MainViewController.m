@@ -90,9 +90,9 @@ CGFloat const paddings = 16;
     self.contentController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-      [self.headerController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor constant:paddings],
+      [self.headerController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
       [self.headerController.collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:navBarHeight],
-      [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-paddings],
+      [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
       [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:navBarHeight + 100],
     ]];
     

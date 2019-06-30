@@ -7,7 +7,7 @@
 //
 
 #import "HeaderViewController.h"
-#import "CollectionViewCell.h"
+#import "HeaderCollectionViewCell.h"
 #import <EventKit/EventKit.h>
 #import "Colors.h"
 
@@ -30,9 +30,9 @@ static NSString * const gridCellReuseIdentifier = @"GridCell";
     self.dayIndex = 0;
     self.dataModel = [[NSArray alloc] init];
     
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [Colors darkBlueColor];
     
-    [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:gridCellReuseIdentifier];
+    [self.collectionView registerClass:[HeaderCollectionViewCell class] forCellWithReuseIdentifier:gridCellReuseIdentifier];
 }
 
 #pragma mark - Seters
@@ -58,14 +58,14 @@ static NSString * const gridCellReuseIdentifier = @"GridCell";
     return 4;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:eventCellReuseIdentifier forIndexPath:indexPath];
+- (HeaderCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:eventCellReuseIdentifier forIndexPath:indexPath];
 //
 //    cell.backgroundColor = [UIColor yellowColor];
 //    NSArray *sectionModel = self.dataModel[indexPath.section];
 //    [cell setEvent:sectionModel[indexPath.row]];
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:gridCellReuseIdentifier forIndexPath:indexPath];
+    HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:gridCellReuseIdentifier forIndexPath:indexPath];
     
     cell.contentView.backgroundColor = [UIColor greenColor];
     

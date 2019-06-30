@@ -10,7 +10,7 @@
 #import <EventKit/EventKit.h>
 
 
-@interface CollectionViewCell : UICollectionViewCell
+@interface ContentCollectionViewCell : UICollectionViewCell
 
 -(void)setEvent:(EKEvent *)event;
 

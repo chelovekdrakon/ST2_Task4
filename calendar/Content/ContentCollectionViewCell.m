@@ -1,19 +1,11 @@
-//
-//  CollectionViewCell.m
-//  calendar
-//
-//  Created by Фёдор Морев on 6/29/19.
-//  Copyright © 2019 Фёдор Морев. All rights reserved.
-//
+#import "ContentCollectionViewCell.h"
 
-#import "CollectionViewCell.h"
-
-@interface CollectionViewCell()
+@interface ContentCollectionViewCell()
 @property(strong, nonatomic) EKEvent *event;
 @property(strong, nonatomic) UILabel *label;
 @end
 
-@implementation CollectionViewCell
+@implementation ContentCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -31,7 +23,5 @@
     [self.label sizeToFit];
     [self.contentView sizeToFit];
 }
-
-
 
 @end

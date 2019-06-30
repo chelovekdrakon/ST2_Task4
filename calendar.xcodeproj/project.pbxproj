@@ -11,12 +11,13 @@
 		32012D3D22C8F538001CFA83 /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D3C22C8F538001CFA83 /* Colors.m */; };
 		32012D4622C901DD001CFA83 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D4522C901DD001CFA83 /* MainViewController.m */; };
 		32012D4922C90477001CFA83 /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D4822C90477001CFA83 /* ContentViewController.m */; };
+		32012D4E22C92EE4001CFA83 /* HeaderCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */; };
+		32012D5122C92EF5001CFA83 /* ContentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D5022C92EF5001CFA83 /* ContentCollectionViewCell.m */; };
 		32330A2E22C7B0B000E411EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32330A2D22C7B0B000E411EF /* AppDelegate.m */; };
 		32330A3622C7B0B000E411EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3522C7B0B000E411EF /* Assets.xcassets */; };
 		32330A3922C7B0B000E411EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3722C7B0B000E411EF /* LaunchScreen.storyboard */; };
 		32330A3C22C7B0B000E411EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32330A3B22C7B0B000E411EF /* main.m */; };
 		327EE5B822C7B38400609195 /* HeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 327EE5B722C7B38400609195 /* HeaderViewController.m */; };
-		327EE5BC22C7B86700609195 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 327EE5BB22C7B86700609195 /* CollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,10 @@
 		32012D4522C901DD001CFA83 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		32012D4722C90477001CFA83 /* ContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
 		32012D4822C90477001CFA83 /* ContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
+		32012D4C22C92EE4001CFA83 /* HeaderCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionViewCell.h; sourceTree = "<group>"; };
+		32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionViewCell.m; sourceTree = "<group>"; };
+		32012D4F22C92EF5001CFA83 /* ContentCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentCollectionViewCell.h; sourceTree = "<group>"; };
+		32012D5022C92EF5001CFA83 /* ContentCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentCollectionViewCell.m; sourceTree = "<group>"; };
 		32330A2922C7B0B000E411EF /* calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32330A2C22C7B0B000E411EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		32330A2D22C7B0B000E411EF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -36,8 +41,6 @@
 		32330A3B22C7B0B000E411EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		327EE5B622C7B38400609195 /* HeaderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderViewController.h; sourceTree = "<group>"; };
 		327EE5B722C7B38400609195 /* HeaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderViewController.m; sourceTree = "<group>"; };
-		327EE5BA22C7B86700609195 /* CollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
-		327EE5BB22C7B86700609195 /* CollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,28 @@
 			path = uItils;
 			sourceTree = "<group>";
 		};
+		32012D4A22C92E74001CFA83 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				327EE5B622C7B38400609195 /* HeaderViewController.h */,
+				327EE5B722C7B38400609195 /* HeaderViewController.m */,
+				32012D4C22C92EE4001CFA83 /* HeaderCollectionViewCell.h */,
+				32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		32012D4B22C92E8A001CFA83 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				32012D4722C90477001CFA83 /* ContentViewController.h */,
+				32012D4822C90477001CFA83 /* ContentViewController.m */,
+				32012D4F22C92EF5001CFA83 /* ContentCollectionViewCell.h */,
+				32012D5022C92EF5001CFA83 /* ContentCollectionViewCell.m */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		32330A2022C7B0B000E411EF = {
 			isa = PBXGroup;
 			children = (
@@ -89,9 +114,11 @@
 		32330A2B22C7B0B000E411EF /* calendar */ = {
 			isa = PBXGroup;
 			children = (
+				32012D4B22C92E8A001CFA83 /* Content */,
+				32012D4A22C92E74001CFA83 /* Header */,
 				32012D3E22C8F582001CFA83 /* uItils */,
-				327EE5BD22C7B87100609195 /* components */,
-				327EE5B922C7B38C00609195 /* controllers */,
+				32012D4422C901DD001CFA83 /* MainViewController.h */,
+				32012D4522C901DD001CFA83 /* MainViewController.m */,
 				32330A2C22C7B0B000E411EF /* AppDelegate.h */,
 				32330A2D22C7B0B000E411EF /* AppDelegate.m */,
 				32330A3522C7B0B000E411EF /* Assets.xcassets */,
@@ -100,28 +127,6 @@
 				32330A3B22C7B0B000E411EF /* main.m */,
 			);
 			path = calendar;
-			sourceTree = "<group>";
-		};
-		327EE5B922C7B38C00609195 /* controllers */ = {
-			isa = PBXGroup;
-			children = (
-				32012D4422C901DD001CFA83 /* MainViewController.h */,
-				32012D4522C901DD001CFA83 /* MainViewController.m */,
-				327EE5B622C7B38400609195 /* HeaderViewController.h */,
-				327EE5B722C7B38400609195 /* HeaderViewController.m */,
-				32012D4722C90477001CFA83 /* ContentViewController.h */,
-				32012D4822C90477001CFA83 /* ContentViewController.m */,
-			);
-			path = controllers;
-			sourceTree = "<group>";
-		};
-		327EE5BD22C7B87100609195 /* components */ = {
-			isa = PBXGroup;
-			children = (
-				327EE5BA22C7B86700609195 /* CollectionViewCell.h */,
-				327EE5BB22C7B86700609195 /* CollectionViewCell.m */,
-			);
-			path = components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,8 +203,9 @@
 				32012D4622C901DD001CFA83 /* MainViewController.m in Sources */,
 				327EE5B822C7B38400609195 /* HeaderViewController.m in Sources */,
 				32330A3C22C7B0B000E411EF /* main.m in Sources */,
-				327EE5BC22C7B86700609195 /* CollectionViewCell.m in Sources */,
+				32012D4E22C92EE4001CFA83 /* HeaderCollectionViewCell.m in Sources */,
 				32330A2E22C7B0B000E411EF /* AppDelegate.m in Sources */,
+				32012D5122C92EF5001CFA83 /* ContentCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
