@@ -30,6 +30,13 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.eventStore = [[EKEventStore alloc] init];
+    
+    self.navigationItem.title = @"Boo!";
+    
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    
+    bar.barTintColor = [UIColor colorWithRed:3.f/256.f green:117.f/256.f blue:148.f/256.f alpha:1];
+    bar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
 
     [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
         for (int i = 0; i < 7; i++) {

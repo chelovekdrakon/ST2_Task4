@@ -25,9 +25,8 @@
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     CollectionViewController *vc = [[CollectionViewController alloc] initWithCollectionViewLayout:flowLayout];
-    
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
-    
+
     [self.window setRootViewController:nc];
     [self.window makeKeyAndVisible];
     
