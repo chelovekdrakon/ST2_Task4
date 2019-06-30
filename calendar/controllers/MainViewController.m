@@ -66,6 +66,11 @@ CGFloat const paddings = 16;
     self.headerController = [[HeaderViewController alloc] initWithCollectionViewLayout:headerFlowLayout];
     self.contentController = [[ContentViewController alloc] initWithCollectionViewLayout:contentFlowLayout];
     
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleHorizontalSwipe:)];
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.contentController.collectionView addGestureRecognizer:swipeRecognizer];
+    
     self.headerController.collectionView.pagingEnabled = YES;
     self.headerController.collectionView.showsHorizontalScrollIndicator = NO;
     
@@ -93,6 +98,12 @@ CGFloat const paddings = 16;
       [self.contentController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
       [self.contentController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-bottomPadding],
     ]];
+}
+
+#pragma mark - Handlers
+
+- (void)handleHorizontalSwipe:(UISwipeGestureRecognizer *)gesture {
+    NSLog(@"Swipe left! Move header right!");
 }
 
 #pragma mark - Helpers
