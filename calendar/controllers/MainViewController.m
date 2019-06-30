@@ -16,7 +16,7 @@
 CGFloat const paddings = 16;
 
 
-@interface MainViewController ()
+@interface MainViewController () <HeaderViewControllerDelegate, ContentViewControllerDelegate>
 @property(strong, nonatomic) HeaderViewController *headerController;
 @property(strong, nonatomic) ContentViewController *contentController;
 
@@ -52,10 +52,15 @@ CGFloat const paddings = 16;
 #pragma mark - UI Generators
 
 - (void)layoutCollectionViews {
+    // Styles
     UINavigationBar *bar = [self.navigationController navigationBar];
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    
     NSInteger navBarHeight = bar.frame.size.height + statusBarFrame.size.height;
+    
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    CGFloat bottomPadding = window.safeAreaInsets.bottom;
+    
+    // Init
     
     UICollectionViewFlowLayout* headerFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [headerFlowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -66,9 +71,11 @@ CGFloat const paddings = 16;
     self.headerController = [[HeaderViewController alloc] initWithCollectionViewLayout:headerFlowLayout];
     self.contentController = [[ContentViewController alloc] initWithCollectionViewLayout:contentFlowLayout];
     
+    self.headerController.controllerDelegate = self;
+    self.contentController.controllerDelegate = self;
+    
     UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleHorizontalSwipe:)];
     swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    
     [self.contentController.collectionView addGestureRecognizer:swipeRecognizer];
     
     self.headerController.collectionView.pagingEnabled = YES;
@@ -76,6 +83,8 @@ CGFloat const paddings = 16;
     
     [self.view addSubview:self.headerController.collectionView];
     [self.view addSubview:self.contentController.collectionView];
+    
+    // Layout
     
     self.headerController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -86,9 +95,6 @@ CGFloat const paddings = 16;
       [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor constant:-paddings],
       [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:navBarHeight + 100],
     ]];
-    
-    UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    CGFloat bottomPadding = window.safeAreaInsets.bottom;
     
     self.contentController.collectionView.contentInset = UIEdgeInsetsMake(0, paddings, bottomPadding, paddings);
 
@@ -102,7 +108,7 @@ CGFloat const paddings = 16;
 
 #pragma mark - Handlers
 
-- (void)handleHorizontalSwipe:(UISwipeGestureRecognizer *)gesture {
+- (void)handleHorizontalSwipe:(UISwipeGestureRecognizer *)swipeRecognizer {
     NSLog(@"Swipe left! Move header right!");
 }
 

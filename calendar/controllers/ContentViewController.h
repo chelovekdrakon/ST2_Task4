@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ContentViewControllerDelegate <NSObject>
+@end
+
 @interface ContentViewController : UICollectionViewController
-
+@property(weak, nonatomic) UIViewController <ContentViewControllerDelegate> *controllerDelegate;
 - (void)updateDataModel:(NSArray *)nextDataModel;
-
 @end
