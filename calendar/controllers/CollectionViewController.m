@@ -9,6 +9,7 @@
 #import "CollectionViewController.h"
 #import "CollectionViewCell.h"
 #import <EventKit/EventKit.h>
+#import "Colors.h"
 
 static NSString * const reuseIdentifier = @"Cell";
 
@@ -21,6 +22,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 @implementation CollectionViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,17 +38,11 @@ static NSString * const reuseIdentifier = @"Cell";
     
     UINavigationBar *bar = [self.navigationController navigationBar];
     
-    bar.barTintColor = [UIColor colorWithRed:3.f/256.f green:117.f/256.f blue:148.f/256.f alpha:1];
-    bar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+    bar.barTintColor = [Colors darkBlueColor];
+    bar.titleTextAttributes = @{NSForegroundColorAttributeName: [Colors whiteColor]};
 
     [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
-        for (int i = 0; i < 7; i++) {
-            NSDate *startDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * i)];
-            NSDate *endDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * (i + 1))];
-            NSPredicate *pred = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
-            NSArray *events = [self.eventStore eventsMatchingPredicate:pred];
-            [self.dataModel addObject:events];
-        }
+        [self fetchWeekEvents];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
@@ -55,7 +52,19 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark - Helpers
+
+- (void)fetchWeekEvents {
+    for (int i = 0; i < 7; i++) {
+        NSDate *startDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * i)];
+        NSDate *endDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * (i + 1))];
+        NSPredicate *pred = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
+        NSArray *events = [self.eventStore eventsMatchingPredicate:pred];
+        [self.dataModel addObject:events];
+    }
+}
+
+#pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -73,28 +82,22 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blackColor];
-    
-    // Configure the cell
+    cell.backgroundColor = [UIColor yellowColor];
+    NSArray *sectionModel = self.dataModel[indexPath.section];
+    [cell setEvent:sectionModel[indexPath.row]];
     
     return cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
+#pragma mark - <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
 }
-*/
 
-/*
-// Uncomment this method to specify if the specified item should be selected
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-*/
 
 /*
 // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

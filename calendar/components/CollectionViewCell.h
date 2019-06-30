@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <EventKit/EventKit.h>
 
 
 @interface CollectionViewCell : UICollectionViewCell
+
+-(void)setEvent:(EKEvent *)event;
 
 @end
