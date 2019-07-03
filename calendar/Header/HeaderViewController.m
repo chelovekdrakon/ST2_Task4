@@ -14,7 +14,9 @@
 static NSString * const cellReuseIdentifier = @"cell";
 
 @interface HeaderViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
+@property(strong, nonatomic) NSDate *currentDate;
 @property(strong, nonatomic) NSCalendar *calendar;
+
 @property(strong, nonatomic) NSArray *weekDates;
 @property(strong, nonatomic) NSArray *weekDaysSymbols;
 
@@ -30,13 +32,14 @@ static NSString * const cellReuseIdentifier = @"cell";
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
+        self.currentDate = [NSDate date];
         [self initLocalCalendar];
         
         NSInteger dayIndex = [self getWeekDayIndex];
         self.dayIndex = dayIndex;
         self.selectedDayIndex = dayIndex;
         
-        self.weekDates = [self getWeekDates];
+        self.weekDates = [self getWeekDatesForDate:self.currentDate];
         self.weekDaysSymbols = [self getWeekDaySymbols];
     }
     return self;
@@ -65,16 +68,8 @@ static NSString * const cellReuseIdentifier = @"cell";
 }
 
 - (HeaderCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:eventCellReuseIdentifier forIndexPath:indexPath];
-//
-//    cell.backgroundColor = [UIColor yellowColor];
-//    NSArray *sectionModel = self.dataModel[indexPath.section];
-//    [cell setEvent:sectionModel[indexPath.row]];
-    
     HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseIdentifier forIndexPath:indexPath];
-    
     cell.backgroundColor = [UIColor whiteColor];
-    
     return cell;
 }
 
@@ -88,21 +83,6 @@ static NSString * const cellReuseIdentifier = @"cell";
     return YES;
 }
 
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UIollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
-
 #pragma mark - <UIGestureRecognizerDelegate>
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer     shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -114,8 +94,10 @@ static NSString * const cellReuseIdentifier = @"cell";
 - (void)handleSwipe:(UISwipeGestureRecognizer *)swipeRecognizer {
     if (swipeRecognizer.direction == UISwipeGestureRecognizerDirectionRight) {
         NSLog(@"Swipe Right!");
+        [self changeWeekDatesTo:-1];
     } else if (swipeRecognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
         NSLog(@"Swipe Left!");
+        [self changeWeekDatesTo:1];
     }
 }
 
@@ -136,21 +118,33 @@ static NSString * const cellReuseIdentifier = @"cell";
 
 #pragma mark - Utils
 
-- (NSArray *)getWeekDates {
+- (void)changeWeekDatesTo:(NSInteger )index {
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.weekOfYear = index;
+    
+    NSDate *dateNextWeek = [self.calendar dateByAddingComponents:components toDate:self.currentDate options:NSCalendarWrapComponents];
+    self.currentDate = dateNextWeek;
+    NSArray *weekDates = [self getWeekDatesForDate:dateNextWeek];
+    
+    self.weekDates = weekDates;
+    [self.collectionView reloadData];
+}
+
+- (NSArray *)getWeekDatesForDate:(NSDate *)date {
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.day = -self.dayIndex;
-    NSDate *weekStart = [self.calendar dateByAddingComponents:components toDate:[NSDate date] options:NSCalendarWrapComponents];
+    NSDate *weekStart = [self.calendar dateByAddingComponents:components toDate:date options:NSCalendarWrapComponents];
     
-    NSMutableArray *dates = [NSMutableArray array];
+    NSMutableArray *weekDates = [NSMutableArray array];
     
     for (int i = 0; i < 7; i++) {
         components.day = i;
         NSDate *date = [self.calendar dateByAddingComponents:components toDate:weekStart options:NSCalendarWrapComponents];
-        NSInteger weekDay = [self.calendar component:NSCalendarUnitDay fromDate:date];
-        [dates addObject:@(weekDay)];
+        NSInteger weekDayDate = [self.calendar component:NSCalendarUnitDay fromDate:date];
+        [weekDates addObject:@(weekDayDate)];
     }
     
-    return dates;
+    return weekDates;
 }
 
 - (void)initLocalCalendar {
@@ -164,9 +158,8 @@ static NSString * const cellReuseIdentifier = @"cell";
 }
 
 - (NSInteger)getWeekDayIndex {
-    NSDate *now = [NSDate date];
-    NSDateComponents *components = [self.calendar components:NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitSecond | NSCalendarUnitMinute | NSCalendarUnitWeekday
-                                                    fromDate:now];
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitWeekday
+                                                    fromDate:self.currentDate];
     
     return (components.weekday == 1)
     ? 6
