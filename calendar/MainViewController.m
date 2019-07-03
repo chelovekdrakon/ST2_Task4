@@ -34,6 +34,7 @@ CGFloat const paddings = 16;
     UINavigationBar *bar = [self.navigationController navigationBar];
     
     bar.barTintColor = [Colors darkBlueColor];
+    bar.translucent = NO;
     bar.titleTextAttributes = @{NSForegroundColorAttributeName: [Colors whiteColor]};
     
     [self layoutCollectionViews];
@@ -91,9 +92,9 @@ CGFloat const paddings = 16;
     
     [NSLayoutConstraint activateConstraints:@[
       [self.headerController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
-      [self.headerController.collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:navBarHeight],
+      [self.headerController.collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
       [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-      [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:navBarHeight + 100],
+      [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:100],
     ]];
     
     self.contentController.collectionView.contentInset = UIEdgeInsetsMake(0, paddings, bottomPadding, paddings);

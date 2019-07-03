@@ -24,6 +24,9 @@
     [self.window setRootViewController:nc];
     [self.window makeKeyAndVisible];
     
+    // remove navBar title border
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
     return YES;
 }
 
