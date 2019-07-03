@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @protocol HeaderViewControllerDelegate <NSObject>
+@required
+- (void)didSelectDate:(NSDate *)date;
 @end
 
 @interface HeaderViewController : UICollectionViewController

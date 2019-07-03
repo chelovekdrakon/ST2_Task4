@@ -113,6 +113,12 @@ CGFloat const paddings = 16;
     NSLog(@"Swipe left! Move header right!");
 }
 
+#pragma mark - <HeaderViewControllerDelegate>
+
+- (void)didSelectDate:(NSDate *)date {
+    NSLog(@"Selected Date! = %@", date);
+}
+
 #pragma mark - Helpers
 
 - (void)fetchWeekEvents {
