@@ -13,5 +13,4 @@
 
 @interface HeaderViewController : UICollectionViewController
 @property(weak, nonatomic) UIViewController <HeaderViewControllerDelegate> *controllerDelegate;
-- (void)updateDataModel:(NSArray *)nextDataModel;
 @end

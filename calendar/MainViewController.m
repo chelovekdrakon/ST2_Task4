@@ -45,7 +45,7 @@ CGFloat const paddings = 16;
         [self fetchWeekEvents];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.headerController updateDataModel:self.dataModel];
+            [self.contentController updateDataModel:self.dataModel];
         });
     }];
 }

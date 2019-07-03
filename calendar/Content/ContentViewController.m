@@ -27,6 +27,10 @@ static NSString * const gridCellReuseIdentifier = @"GridCell";
     self.dayIndex = 0;
     self.dataModel = [[NSArray alloc] init];
     
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSDateComponents *components = [calendar components:NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitSecond | NSCalendarUnitMinute
+//                                               fromDate:[NSDate date]];
+    
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
     [self.collectionView registerClass:[ContentCollectionViewCell class] forCellWithReuseIdentifier:gridCellReuseIdentifier];
