@@ -20,9 +20,9 @@ CGFloat const paddings = 16;
 @property(strong, nonatomic) HeaderViewController *headerController;
 @property(strong, nonatomic) ContentViewController *contentController;
 
-@property(strong, nonatomic) NSMutableArray <NSArray *> *dataModel;
 @property(strong, nonatomic) EKEventStore *eventStore;
 @property(strong, nonatomic) NSDateFormatter *titleFormatter;
+@property(strong, nonatomic) NSMutableArray <NSArray *> *dataModel;
 @end
 
 @implementation MainViewController
@@ -45,7 +45,8 @@ CGFloat const paddings = 16;
     
     [self styleNavBar];
     [self setTitleFromDate:[NSDate date]];
-    [self layoutCollectionViews];
+    [self layoutHeaderCollectionView];
+    [self layoutContentCollectionView];
     
     self.eventStore = [[EKEventStore alloc] init];
     
@@ -61,43 +62,18 @@ CGFloat const paddings = 16;
 
 #pragma mark - UI Generators
 
-- (void)layoutCollectionViews {
-    // Styles
-    UINavigationBar *bar = [self.navigationController navigationBar];
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    NSInteger navBarHeight = bar.frame.size.height + statusBarFrame.size.height;
-    
-    UIWindow *window = UIApplication.sharedApplication.keyWindow;
-    CGFloat bottomPadding = window.safeAreaInsets.bottom;
-    
-    // Init
-    
+- (void)layoutHeaderCollectionView {
     UICollectionViewFlowLayout* headerFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [headerFlowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    UICollectionViewFlowLayout* contentFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [contentFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
     self.headerController = [[HeaderViewController alloc] initWithCollectionViewLayout:headerFlowLayout];
-    self.contentController = [[ContentViewController alloc] initWithCollectionViewLayout:contentFlowLayout];
     
     self.headerController.controllerDelegate = self;
-    self.contentController.controllerDelegate = self;
-    
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleHorizontalSwipe:)];
-    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.contentController.collectionView addGestureRecognizer:swipeRecognizer];
-    
     self.headerController.collectionView.pagingEnabled = YES;
     self.headerController.collectionView.showsHorizontalScrollIndicator = NO;
+    self.headerController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.view addSubview:self.headerController.collectionView];
-    [self.view addSubview:self.contentController.collectionView];
-    
-    // Layout
-    
-    self.headerController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.contentController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
       [self.headerController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
@@ -105,9 +81,28 @@ CGFloat const paddings = 16;
       [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
       [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:100],
     ]];
-    
-    self.contentController.collectionView.contentInset = UIEdgeInsetsMake(0, paddings, bottomPadding, paddings);
+}
 
+- (void)layoutContentCollectionView {
+    UICollectionViewFlowLayout* contentFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [contentFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    self.contentController = [[ContentViewController alloc] initWithCollectionViewLayout:contentFlowLayout];
+    
+    self.contentController.controllerDelegate = self;
+    self.contentController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleHorizontalSwipe:)];
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.contentController.collectionView addGestureRecognizer:swipeRecognizer];
+    
+    [self.view addSubview:self.contentController.collectionView];
+    
+    UIWindow *window = UIApplication.sharedApplication.keyWindow;
+    CGFloat bottomPadding = window.safeAreaInsets.bottom;
+
+    self.contentController.collectionView.contentInset = UIEdgeInsetsMake(0, paddings, bottomPadding, paddings);
+    
     [NSLayoutConstraint activateConstraints:@[
       [self.contentController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
       [self.contentController.collectionView.topAnchor constraintEqualToAnchor:self.headerController.collectionView.bottomAnchor],
