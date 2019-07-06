@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface HeaderCollectionViewCell : UICollectionViewCell
-@property(strong, nonatomic) UILabel *label;
+@property(assign, nonatomic) BOOL isToday;
+
+@property(strong, nonatomic) UIView *viewFlag;
+@property(strong, nonatomic) UILabel *labelDay;
+@property(strong, nonatomic) UILabel *labelDaySymbol;
 @end

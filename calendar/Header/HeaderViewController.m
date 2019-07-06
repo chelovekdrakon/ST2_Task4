@@ -17,8 +17,9 @@ static NSString * const cellReuseIdentifier = @"cell";
 @property(strong, nonatomic) NSDate *currentDate;
 @property(strong, nonatomic) NSCalendar *calendar;
 
-@property(strong, nonatomic) NSArray *weekDates;
-@property(strong, nonatomic) NSArray *weekDaysSymbols;
+@property(strong, nonatomic) NSArray <NSDate *> *weekDates;
+@property(strong, nonatomic) NSArray <NSNumber *> *weekDays;
+@property(strong, nonatomic) NSArray <NSString *> *weekDaysSymbols;
 
 @property(assign, nonatomic) NSInteger currentDayIndex;
 @property(assign, nonatomic) NSInteger selectedDayIndex;
@@ -40,6 +41,7 @@ static NSString * const cellReuseIdentifier = @"cell";
         self.selectedDayIndex = dayIndex;
         
         self.weekDates = [self getWeekDatesForDate:self.currentDate];
+        self.weekDays = [self getWeekDaysFromDates:self.weekDates];
         self.weekDaysSymbols = [self getWeekDaySymbols];
     }
     return self;
@@ -69,10 +71,20 @@ static NSString * const cellReuseIdentifier = @"cell";
 
 - (HeaderCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     
-    cell.label.text = [NSString stringWithFormat:@"%@", self.weekDates[indexPath.row]];
-    [cell.label sizeToFit];
+    cell.labelDay.text = [NSString stringWithFormat:@"%@", self.weekDays[indexPath.row]];
+    [cell.labelDay sizeToFit];
+    
+    cell.labelDaySymbol.text = [NSString stringWithFormat:@"%@", self.weekDaysSymbols[indexPath.row]];
+    cell.labelDaySymbol.frame = CGRectMake(0, CGRectGetHeight(cell.labelDay.bounds), 0, 0);
+    [cell.labelDaySymbol sizeToFit];
+    
+    if ([self.calendar isDateInToday:self.weekDates[indexPath.row]]) {
+        cell.isToday = YES;
+        cell.viewFlag.frame = CGRectMake(0, CGRectGetMaxY(cell.labelDaySymbol.frame), 3, 3);
+        cell.viewFlag.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        cell.viewFlag.layer.cornerRadius = 2.f;
+    }
     
     return cell;
 }
@@ -91,10 +103,7 @@ static NSString * const cellReuseIdentifier = @"cell";
     self.selectedDayIndex = indexPath.row;
     
     if ([self.controllerDelegate conformsToProtocol:@protocol(HeaderViewControllerDelegate)]) {
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-        components.day = indexPath.row - self.currentDayIndex;
-        NSDate *date = [self.calendar dateByAddingComponents:components toDate:self.currentDate options:NSCalendarWrapComponents];
-        [self.controllerDelegate didSelectDate:date];
+        [self.controllerDelegate didSelectDate:self.weekDates[indexPath.row]];
     }
 }
 
@@ -149,8 +158,10 @@ static NSString * const cellReuseIdentifier = @"cell";
     
     NSDate *dateNextWeek = [self.calendar dateByAddingComponents:components toDate:self.currentDate options:NSCalendarWrapComponents];
     self.currentDate = dateNextWeek;
-    NSArray *weekDates = [self getWeekDatesForDate:dateNextWeek];
+    NSArray <NSDate *> *weekDates = [self getWeekDatesForDate:dateNextWeek];
+    NSArray <NSNumber *> *weekDays = [self getWeekDaysFromDates:weekDates];
     
+    self.weekDays = weekDays;
     self.weekDates = weekDates;
     [self.collectionView reloadData];
 }
@@ -165,11 +176,22 @@ static NSString * const cellReuseIdentifier = @"cell";
     for (int i = 0; i < 7; i++) {
         components.day = i;
         NSDate *date = [self.calendar dateByAddingComponents:components toDate:weekStart options:NSCalendarWrapComponents];
-        NSInteger weekDayDate = [self.calendar component:NSCalendarUnitDay fromDate:date];
-        [weekDates addObject:@(weekDayDate)];
+
+        [weekDates addObject:date];
     }
     
     return weekDates;
+}
+
+- (NSArray <NSNumber *> *)getWeekDaysFromDates:(NSArray <NSDate *> *)dates {
+    NSMutableArray *weekDays = [NSMutableArray array];
+    
+    for (NSDate *date in dates) {
+        NSInteger weekDayDate = [self.calendar component:NSCalendarUnitDay fromDate:date];
+        [weekDays addObject:@(weekDayDate)];
+    }
+    
+    return weekDays;
 }
 
 - (void)initLocalCalendar {

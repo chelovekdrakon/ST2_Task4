@@ -81,7 +81,7 @@ CGFloat const paddings = 16;
       [self.headerController.collectionView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
       [self.headerController.collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
       [self.headerController.collectionView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
-      [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:100],
+      [self.headerController.collectionView.bottomAnchor constraintEqualToAnchor:self.view.topAnchor constant:60],
     ]];
 }
 
