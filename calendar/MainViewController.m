@@ -22,21 +22,29 @@ CGFloat const paddings = 16;
 
 @property(strong, nonatomic) NSMutableArray <NSArray *> *dataModel;
 @property(strong, nonatomic) EKEventStore *eventStore;
+@property(strong, nonatomic) NSDateFormatter *titleFormatter;
 @end
 
 @implementation MainViewController
 
+#pragma mark - Lifecycle
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ru"];
+        dateFormatter.dateFormat = @"dd MMMM YYYY";
+        self.titleFormatter = dateFormatter;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"Boo!";
-    
-    UINavigationBar *bar = [self.navigationController navigationBar];
-    
-    bar.barTintColor = [Colors darkBlueColor];
-    bar.translucent = NO;
-    bar.titleTextAttributes = @{NSForegroundColorAttributeName: [Colors whiteColor]};
-    
+    [self styleNavBar];
+    [self setTitleFromDate:[NSDate date]];
     [self layoutCollectionViews];
     
     self.eventStore = [[EKEventStore alloc] init];
@@ -49,6 +57,7 @@ CGFloat const paddings = 16;
         });
     }];
 }
+
 
 #pragma mark - UI Generators
 
@@ -116,10 +125,23 @@ CGFloat const paddings = 16;
 #pragma mark - <HeaderViewControllerDelegate>
 
 - (void)didSelectDate:(NSDate *)date {
-    NSLog(@"Selected Date! = %@", date);
+    [self setTitleFromDate:date];
 }
 
 #pragma mark - Helpers
+
+- (void)setTitleFromDate:(NSDate *)date {
+    NSString *title = [self.titleFormatter stringFromDate:date];
+    self.navigationItem.title = title;
+}
+
+- (void)styleNavBar {
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    
+    bar.translucent = NO;
+    bar.barTintColor = [Colors darkBlueColor];
+    bar.titleTextAttributes = @{NSForegroundColorAttributeName: [Colors whiteColor]};
+}
 
 - (void)fetchWeekEvents {
     for (int i = 0; i < 7; i++) {
