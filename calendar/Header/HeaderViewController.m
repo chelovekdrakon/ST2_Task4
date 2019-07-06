@@ -71,10 +71,8 @@ static NSString * const cellReuseIdentifier = @"cell";
     HeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.text = [NSString stringWithFormat:@"%@", self.weekDates[indexPath.row]];
-    [label sizeToFit];
-    [cell addSubview:label];
+    cell.label.text = [NSString stringWithFormat:@"%@", self.weekDates[indexPath.row]];
+    [cell.label sizeToFit];
     
     return cell;
 }
@@ -99,6 +97,16 @@ static NSString * const cellReuseIdentifier = @"cell";
         [self.controllerDelegate didSelectDate:date];
     }
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(40, 40);
+}
+
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section;
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section;
 
 #pragma mark - <UIGestureRecognizerDelegate>
 

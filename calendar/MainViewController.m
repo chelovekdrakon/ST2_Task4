@@ -11,6 +11,7 @@
 #import "Colors.h"
 #import "MainViewController.h"
 #import "HeaderViewController.h"
+#import "HeaderViewFlowLayout.h"
 #import "ContentViewController.h"
 
 CGFloat const paddings = 16;
@@ -63,8 +64,9 @@ CGFloat const paddings = 16;
 #pragma mark - UI Generators
 
 - (void)layoutHeaderCollectionView {
-    UICollectionViewFlowLayout* headerFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    HeaderViewFlowLayout* headerFlowLayout = [[HeaderViewFlowLayout alloc] init];
     [headerFlowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    headerFlowLayout.cellSize = CGSizeMake(40, 40 );
     
     self.headerController = [[HeaderViewController alloc] initWithCollectionViewLayout:headerFlowLayout];
     

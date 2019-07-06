@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HeaderCollectionViewCell : UICollectionViewCell
-
+@property(strong, nonatomic) UILabel *label;
 @end

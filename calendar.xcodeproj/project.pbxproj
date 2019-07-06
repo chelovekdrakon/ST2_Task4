@@ -13,6 +13,7 @@
 		32012D4922C90477001CFA83 /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D4822C90477001CFA83 /* ContentViewController.m */; };
 		32012D4E22C92EE4001CFA83 /* HeaderCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */; };
 		32012D5122C92EF5001CFA83 /* ContentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32012D5022C92EF5001CFA83 /* ContentCollectionViewCell.m */; };
+		320D5E3D22D0C774008015CF /* HeaderViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 320D5E3C22D0C774008015CF /* HeaderViewFlowLayout.m */; };
 		32330A2E22C7B0B000E411EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32330A2D22C7B0B000E411EF /* AppDelegate.m */; };
 		32330A3622C7B0B000E411EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3522C7B0B000E411EF /* Assets.xcassets */; };
 		32330A3922C7B0B000E411EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32330A3722C7B0B000E411EF /* LaunchScreen.storyboard */; };
@@ -32,6 +33,8 @@
 		32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionViewCell.m; sourceTree = "<group>"; };
 		32012D4F22C92EF5001CFA83 /* ContentCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentCollectionViewCell.h; sourceTree = "<group>"; };
 		32012D5022C92EF5001CFA83 /* ContentCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentCollectionViewCell.m; sourceTree = "<group>"; };
+		320D5E3B22D0C774008015CF /* HeaderViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderViewFlowLayout.h; sourceTree = "<group>"; };
+		320D5E3C22D0C774008015CF /* HeaderViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderViewFlowLayout.m; sourceTree = "<group>"; };
 		32330A2922C7B0B000E411EF /* calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32330A2C22C7B0B000E411EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		32330A2D22C7B0B000E411EF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 			children = (
 				327EE5B622C7B38400609195 /* HeaderViewController.h */,
 				327EE5B722C7B38400609195 /* HeaderViewController.m */,
+				320D5E3B22D0C774008015CF /* HeaderViewFlowLayout.h */,
+				320D5E3C22D0C774008015CF /* HeaderViewFlowLayout.m */,
 				32012D4C22C92EE4001CFA83 /* HeaderCollectionViewCell.h */,
 				32012D4D22C92EE4001CFA83 /* HeaderCollectionViewCell.m */,
 			);
@@ -204,6 +209,7 @@
 				327EE5B822C7B38400609195 /* HeaderViewController.m in Sources */,
 				32330A3C22C7B0B000E411EF /* main.m in Sources */,
 				32012D4E22C92EE4001CFA83 /* HeaderCollectionViewCell.m in Sources */,
+				320D5E3D22D0C774008015CF /* HeaderViewFlowLayout.m in Sources */,
 				32330A2E22C7B0B000E411EF /* AppDelegate.m in Sources */,
 				32012D5122C92EF5001CFA83 /* ContentCollectionViewCell.m in Sources */,
 			);
