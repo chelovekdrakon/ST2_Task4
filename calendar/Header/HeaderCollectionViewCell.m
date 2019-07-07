@@ -21,9 +21,9 @@
         self.viewFlag = [[UIView alloc] initWithFrame:CGRectZero];
         self.labelDaySymbol = [[UILabel alloc] initWithFrame:CGRectZero];
         
-        [self addSubview:self.labelDay];
-        [self addSubview:self.viewFlag];
-        [self addSubview:self.labelDaySymbol];
+        [self.contentView addSubview:self.labelDay];
+        [self.contentView addSubview:self.viewFlag];
+        [self.contentView addSubview:self.labelDaySymbol];
     }
     return self;
 }
@@ -33,7 +33,22 @@
 }
 
 - (UIView *)backgroundView {
-    return [[UIView alloc] init];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    bgView.backgroundColor = [UIColor yellowColor];
+    return bgView;
+}
+
+- (UIView *)selectedBackgroundView {
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    bgView.backgroundColor = [UIColor redColor];
+    return bgView;
+}
+
+- (void)prepareForReuse {
+    self.isToday = NO;
+    self.viewFlag.frame = CGRectMake(0, 0, 0, 0);
+    self.viewFlag.layer.backgroundColor = [UIColor clearColor].CGColor;
+    self.viewFlag.layer.cornerRadius = 0.f;
 }
 
 @end

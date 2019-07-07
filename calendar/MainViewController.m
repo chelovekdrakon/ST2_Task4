@@ -21,7 +21,9 @@ CGFloat const paddings = 16;
 @property(strong, nonatomic) HeaderViewController *headerController;
 @property(strong, nonatomic) ContentViewController *contentController;
 
+@property(strong, nonatomic) NSDate *selectedDate;
 @property(strong, nonatomic) EKEventStore *eventStore;
+@property(strong, nonatomic) NSArray <EKEvent *> *events;
 @property(strong, nonatomic) NSDateFormatter *titleFormatter;
 @property(strong, nonatomic) NSMutableArray <NSArray *> *dataModel;
 @end
@@ -33,10 +35,14 @@ CGFloat const paddings = 16;
 - (id)init {
     self = [super init];
     if (self) {
+        self.eventStore = [[EKEventStore alloc] init];
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ru"];
         dateFormatter.dateFormat = @"dd MMMM YYYY";
         self.titleFormatter = dateFormatter;
+        
+        self.selectedDate = [NSDate date];
     }
     return self;
 }
@@ -49,13 +55,11 @@ CGFloat const paddings = 16;
     [self layoutHeaderCollectionView];
     [self layoutContentCollectionView];
     
-    self.eventStore = [[EKEventStore alloc] init];
-    
     [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
-        [self fetchWeekEvents];
+        self.events = [self fetchEventsForDate:self.selectedDate];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.contentController updateDataModel:self.dataModel];
+            [self.contentController updateDataModel:self.events];
         });
     }];
 }
@@ -122,7 +126,9 @@ CGFloat const paddings = 16;
 #pragma mark - <HeaderViewControllerDelegate>
 
 - (void)didSelectDate:(NSDate *)date {
+    self.selectedDate = date;
     [self setTitleFromDate:date];
+    self.events = [self fetchEventsForDate:date];
 }
 
 #pragma mark - Helpers
@@ -140,14 +146,10 @@ CGFloat const paddings = 16;
     bar.titleTextAttributes = @{NSForegroundColorAttributeName: [Colors whiteColor]};
 }
 
-- (void)fetchWeekEvents {
-    for (int i = 0; i < 7; i++) {
-        NSDate *startDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * i)];
-        NSDate *endDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(60 * 60 * 24 * (i + 1))];
-        NSPredicate *pred = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
-        NSArray *events = [self.eventStore eventsMatchingPredicate:pred];
-        [self.dataModel addObject:events];
-    }
+- (NSArray <EKEvent *> *)fetchEventsForDate:(NSDate *)date {
+    NSPredicate *pred = [self.eventStore predicateForEventsWithStartDate:date endDate:date calendars:nil];
+    NSArray *events = [self.eventStore eventsMatchingPredicate:pred];
+    return events;
 }
 
 @end
